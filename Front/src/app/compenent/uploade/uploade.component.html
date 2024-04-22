@@ -1,0 +1,28 @@
+
+<app-sidebar></app-sidebar>
+
+<form (ngSubmit)="submitForm()">
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" name="nom" [(ngModel)]="etudiant.nom" required>
+  
+    <label for="prenom">Prénom:</label>
+    <input type="text" id="prenom" name="prenom" [(ngModel)]="etudiant.prenom" required>
+  
+    <label for="filiere">Filière:</label>
+    <input type="text" id="filiere" name="filiere" [(ngModel)]="etudiant.filiere" required>
+  
+    <label for="promo">Promo:</label>
+    <input type="text" id="promo" name="promo" [(ngModel)]="etudiant.promo" required>
+  
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" [(ngModel)]="etudiant.email" required>
+  
+    <label for="institut">Institut:</label>
+    <input type="text" id="institut" name="institut" [(ngModel)]="etudiant.institut" required>
+  
+    <label for="diplome">Image de diplôme:</label>
+    <input type="file" id="diplome" name="diplome" (change)="onFileSelected($event)" accept="image/*" required>
+  
+    <button type="submit">Soumettre</button>
+  </form>
+  

@@ -1,0 +1,23 @@
+
+<app-sidebar></app-sidebar>
+<!-- gestionnaire.component.html -->
+
+<div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Nom</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let utilisateur of tableauUtilisateurs">
+          <td>{{ utilisateur.id }}</td>
+          <td>{{ utilisateur.name }}</td>
+          <td>{{ utilisateur.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
