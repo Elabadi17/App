@@ -1,0 +1,41 @@
+/* gestionnaire.component.scss */
+
+/* Style for the table */
+.table-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center vertically */
+    height: 100%; /* Ensure the container takes up the full height */
+    max-width: 400px;
+    margin: 0 auto; // Centrer le formulaire horizontalement
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 40px;
+  }
+  
+  /* Style for table headers */
+  .table-container th {
+    background-color: #f2f2f2;
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Style for table cells */
+  .table-container td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Style for even rows */
+  .table-container tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Hover effect for rows */
+  .table-container tr:hover {
+    background-color: #ddd;
+  }
+  

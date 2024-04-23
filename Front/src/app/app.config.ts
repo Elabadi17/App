@@ -9,14 +9,17 @@ import { GestionnaireComponent } from './compenent/gestionnaire/gestionnaire.com
 import { AuthGuard } from './services/auth/auth.guard';
 import { FormulaireEtudiantComponent } from './compenent/uploade/uploade.component';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
-
+import { EtudiantComponent } from './compenent/etudiant/etudiant.component';
+import { EtudiantInfoComponent } from './compenent/etudiant-info/etudiant-info.component';
 // Define routes for Home, About, and Contact components
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent},
-  { path: 'dashboard/registration', component: RegistrationComponent,canActivate: [AuthGuard]  },
+  { path: 'dashboard/registration', component: RegistrationComponent  },
   { path: 'dashboard/gestionnaire', component: GestionnaireComponent, canActivate: [AuthGuard] },
   { path: 'dashboard/upload', component: FormulaireEtudiantComponent },
+  { path: 'dashboard/etudiants', component: EtudiantComponent },
+  { path: 'dashboard/etudiant-info/:metadataHash', component: EtudiantInfoComponent },
 
   { path: 'login', component: LoginComponent },
 

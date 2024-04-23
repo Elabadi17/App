@@ -1,0 +1,15 @@
+<app-sidebar></app-sidebar>
+<div class="etudiant-info-container">
+    <h2>Informations de l'étudiant</h2>
+    <ul>
+      <li><strong>Nom :</strong> {{ data.nom }}</li>
+      <li><strong>Prénom :</strong> {{ data.prenom }}</li>
+      <li><strong>Filière :</strong> {{ data.filiere }}</li>
+      <li><strong>Promo :</strong> {{ data.promo }}</li>
+      <li><strong>Email :</strong> {{ data.email }}</li>
+      <li><strong>Institut :</strong> {{ data.institut }}</li>
+      <li><strong>Hash du diplôme :</strong> {{ data.diplomeHash }}</li>
+    </ul>
+    <img src="https://cloudflare-ipfs.com/ipfs/{{ data.diplomeHash }}" alt="pas image">
+</div>
+  

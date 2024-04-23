@@ -37,6 +37,7 @@ export class RegistrationComponent implements OnInit {
         })
       };
       // Envoi des données au backend
+      console.log(this.userForm.value);
       this.http.post<any>('http://localhost:8080/auth/addNewUser', this.userForm.value,httpOptions).subscribe(
         response => {
           console.log('User added successfully:', response);

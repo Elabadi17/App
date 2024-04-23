@@ -1,0 +1,27 @@
+<app-sidebar></app-sidebar>
+
+
+
+
+    <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Nom</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let etudiant of etudiants">
+              <td>{{ etudiant.id }}</td>
+              <td>{{ etudiant.nom }}</td>
+              <td>           
+                <button (click)="voirDetailsEtudiant(etudiant.metadataHash)">Voir Détails</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+  

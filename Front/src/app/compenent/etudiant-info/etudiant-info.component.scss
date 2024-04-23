@@ -1,0 +1,34 @@
+// Style pour le composant parent
+.etudiant-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  // Style pour le titre
+  .etudiant-info-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  // Style pour la liste des informations de l'étudiant
+  .etudiant-info-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  // Style pour chaque élément de la liste
+  .etudiant-info-container li {
+    margin-bottom: 10px;
+  }
+  
+  // Style pour les étiquettes en gras
+  .etudiant-info-container li strong {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .etudiant-info-container img {
+    width: 300px; // Pour que l'image respecte la largeur du conteneur
+    height: 500px; // Pour maintenir le ratio de l'image
+    margin-top: 20px; // Pour ajouter un espace au-dessus de l'image
+  }

@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { RegistrationComponent } from '../registration/registration.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { IpfsService } from '../../services/Storage/IpfsService';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class FormulaireEtudiantComponent {
     diplome: null // This will store the selected file
   };
 
-  constructor(private ipfsService: IpfsService) {}
+  constructor(private ipfsService: IpfsService,private formBuilder: FormBuilder,private http: HttpClient) {}
 
   onFileSelected(event: any) {
     this.etudiant.diplome = event.target.files[0];
@@ -59,7 +60,24 @@ export class FormulaireEtudiantComponent {
       // Upload metadata file to IPFS
       const ipfsMetadataHash = await this.ipfsService.uploadToIpfs(file);
       console.log('Metadata file uploaded to IPFS. Hash:', ipfsMetadataHash);
-
+      const formData = {
+        nom: this.etudiant.nom,
+        metadataHash: ipfsMetadataHash
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    console.log(formData);
+    this.http.post('http://localhost:8080/enregistrer-metadata', formData,httpOptions).subscribe(
+        () => {
+            console.log('Données enregistrées avec succès');
+        },
+        (error) => {
+            console.error('Erreur lors de l\'enregistrement des données:', error);
+        }
+    );
       // You can now use ipfsMetadataHash and ipfsDiplomeHash to save this information to your database or for other necessary actions
     } catch (error) {
       console.error('Error uploading files to IPFS:', error);
