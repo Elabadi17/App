@@ -1,56 +1,61 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = 'http://localhost:8080/auth'; // Change this to your actual API endpoint
+  private jwtHelper = new JwtHelperService();
 
-  constructor(private http: HttpClient,private router: Router) { }
+  constructor(private http: HttpClient) { }
+
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/generateToken`, { username, password })
+      .pipe(
+        tap(response => {
+          if (response && response.token) {
+            this.saveToken(response.token);
+          }
+        })
+      );
+  }
+
   saveToken(token: string): void {
     localStorage.setItem('token', token);
-
-    // Définir un délai d'une heure pour supprimer le jeton
-    setTimeout(() => {
-      this.logout();
-    }, 3600000); // 1 heure en millisecondes
   }
 
-
-  isLoggedIn(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        resolve(false); // Si le jeton n'existe pas, l'utilisateur n'est pas authentifié
-      }
-
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Ajouter le jeton dans l'en-tête Authorization
-        })
-      };
-      console.log(`Bearer ${token}`);
-      // Envoyer une requête HTTP GET au serveur pour vérifier l'authenticité du jeton
-      this.http.get<any>('http://localhost:8080/auth/admin/adminProfile', httpOptions).subscribe(
-        response => {
-          console.log('User authenticated successfully:', response);
-          resolve(true); // Si la réponse est réussie, l'utilisateur est authentifié
-        },
-        error => {
-          console.error('User authentication failed:', error);
-          resolve(false); // Si la réponse est en erreur, l'utilisateur n'est pas authentifié
-        }
-      );
-    });
+  isLoggedIn(): boolean {
+    if (typeof localStorage === 'undefined') {
+      // Handle the case where localStorage is not available
+     return false;
+    }
+    const token = localStorage.getItem('token');
+    return token !== null && !this.jwtHelper.isTokenExpired(token);
   }
+
+  getRoles(): string[] {
+    if (typeof localStorage === 'undefined') {
+      // Handle the case where localStorage is not available
+      return [];
+    }
+  
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return [];
+    }
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken.roles ? decodedToken.roles.split(',') : [];
+  }
+
   logout(): void {
-    // Supprimer le token JWT du stockage local
     localStorage.removeItem('token');
-    this.router.navigate(['/']); // Assurez-vous que '/' est la route de votre page d'accueil
-
   }
 
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 }

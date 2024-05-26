@@ -18,8 +18,10 @@ import java.util.function.Function;
 public class JwtService {
 
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
-    public String generateToken(String userName) {
+
+    public String generateToken(String userName, String roles) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", roles);
         return createToken(claims, userName);
     }
 
@@ -33,12 +35,16 @@ public class JwtService {
     }
 
     private Key getSignKey() {
-        byte[] keyBytes= Decoders.BASE64.decode(SECRET);
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public String extractRoles(String token) {
+        return extractClaim(token, claims -> claims.get("roles", String.class));
     }
 
     public Date extractExpiration(String token) {
@@ -51,8 +57,7 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
+        return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
@@ -67,7 +72,4 @@ public class JwtService {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
-
-
 }
-

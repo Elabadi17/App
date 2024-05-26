@@ -1,6 +1,5 @@
 package Blockchainapp.controller;
 
-
 import Blockchainapp.entity.AuthRequest;
 import Blockchainapp.entity.AuthResponse;
 import Blockchainapp.entity.UserInfo;
@@ -13,15 +12,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*", allowedHeaders = "*") // Autoriser toutes les origines et tous les en-têtes
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     @Autowired
@@ -43,6 +44,7 @@ public class UserController {
         String response = service.addUser(userInfo);
         return new ResponseEntity<>("{\"message\": \"" + response + "\"}", HttpStatus.CREATED);
     }
+
     @GetMapping("/user/userProfile")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public boolean userProfile() {
@@ -57,13 +59,19 @@ public class UserController {
 
     @PostMapping("/generateToken")
     public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+        );
+
         if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(authRequest.getUsername());
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.joining(","));
+            String token = jwtService.generateToken(authRequest.getUsername(), roles);
             return ResponseEntity.ok(new AuthResponse(token));
         } else {
-            throw new UsernameNotFoundException("Invalid user request !");
+            throw new UsernameNotFoundException("Invalid user request!");
         }
     }
-
 }

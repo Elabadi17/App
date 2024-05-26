@@ -12,6 +12,7 @@ export class AuthGuard implements CanActivate {
   async canActivate(): Promise<boolean> {
     const isLoggedIn = await this.authService.isLoggedIn();
     console.log(isLoggedIn);
+    console.log(this.authService.getRoles())
     if (isLoggedIn) {
       return true; // Autoriser l'accès si l'utilisateur est authentifié
     } else {

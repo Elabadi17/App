@@ -1,8 +1,8 @@
-<aside class="sidebar">
+<aside class="sidebar" *ngIf="isLoggedIn()">
     <ul>
        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard">Dashboard</a></li>
-       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/registration">Registration</a></li>
-       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/gestionnaire">Liste des profs</a></li>
+       <li *ngIf="isAdmin()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/registration">Registration</a></li>
+       <li *ngIf="isUser()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/gestionnaire">Liste des profs</a></li>
        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/upload">Formulaire Diplome</a></li>
        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/etudiants"> Diplome</a></li>
 
