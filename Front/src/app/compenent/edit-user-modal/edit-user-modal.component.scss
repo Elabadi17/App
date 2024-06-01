@@ -1,0 +1,84 @@
+/* edit-user-modal.component.scss */
+
+/* Style pour le conteneur principal */
+:host {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  /* Style pour le titre de la boîte de dialogue */
+  mat-dialog-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Style pour le contenu de la boîte de dialogue */
+  mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Style pour les champs de formulaire */
+  mat-form-field {
+    width: 100%;
+  }
+  
+  /* Style pour les actions de la boîte de dialogue */
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  button {
+    &.mat-button {
+      &.mat-warn {
+        background-color: #ff5252;
+        color: white;
+      }
+  
+      &:not(.mat-warn) {
+        background-color: #3f51b5;
+        color: white;
+      }
+  
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+  
+  /* Style pour les boutons */
+  button {
+    min-width: 100px;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  
+    &.cancel-button {
+      background-color: #f44336;
+      color: white;
+  
+      &:hover {
+        background-color: #d32f2f;
+      }
+    }
+  
+    &.submit-button {
+      background-color: #4caf50;
+      color: white;
+  
+      &:hover {
+        background-color: #388e3c;
+      }
+    }
+  }
+  

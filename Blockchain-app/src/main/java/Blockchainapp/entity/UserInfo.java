@@ -18,8 +18,9 @@ public class UserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String email;
+    private int active=0;
     private String password;
+    private String address;
     private String roles;
 
 }

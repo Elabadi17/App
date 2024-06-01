@@ -23,6 +23,14 @@ export class AuthService {
         })
       );
   }
+  
+
+  // Method to check if user is active
+  isUserActive(): Observable<boolean> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<boolean>(`${this.apiUrl}/isUserActive`, { headers });
+  }
 
   saveToken(token: string): void {
     localStorage.setItem('token', token);
@@ -51,11 +59,34 @@ export class AuthService {
     return decodedToken.roles ? decodedToken.roles.split(',') : [];
   }
 
+  getId(): string[] {
+    if (typeof localStorage === 'undefined') {
+      // Handle the case where localStorage is not available
+      return [];
+    }
+  
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return [];
+    }
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken.roles ? decodedToken.id.split(',') : [];
+  }
+  
+
   logout(): void {
     localStorage.removeItem('token');
   }
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  isAdmin(): boolean {
+    return this.getRoles().includes('ROLE_ADMIN');
+  }
+
+  isUser(): boolean {
+    return this.getRoles().includes('ROLE_USER');
   }
 }

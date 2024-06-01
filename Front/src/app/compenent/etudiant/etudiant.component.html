@@ -1,27 +1,21 @@
 <app-sidebar></app-sidebar>
 
-
-
-
-    <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>id</th>
-              <th>Nom</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let etudiant of etudiants">
-              <td>{{ etudiant.id }}</td>
-              <td>{{ etudiant.nom }}</td>
-              <td>           
-                <button (click)="voirDetailsEtudiant(etudiant.metadataHash)">Voir Détails</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      
-  
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Diplome-ID</th>
+        <th>Student</th>
+        <th>Show detiels</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.name }}</td>
+        <td>{{ student.address }}</td>
+        <td><button (click)="navigateToDetails(student.name)">View Diploma</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

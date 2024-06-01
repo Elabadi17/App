@@ -2,20 +2,32 @@
 <app-sidebar></app-sidebar>
 <!-- gestionnaire.component.html -->
 
-<div class="table-container">
+<div >
     <table>
       <thead>
         <tr>
           <th>id</th>
           <th>Nom</th>
-          <th>Email</th>
+          <th>Adresse</th>
+          <th>Activer/Desactiver</th>
+          <th>Password</th>
+
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let utilisateur of tableauUtilisateurs">
           <td>{{ utilisateur.id }}</td>
           <td>{{ utilisateur.name }}</td>
-          <td>{{ utilisateur.email }}</td>
+          <td>{{ utilisateur.address }}</td>
+          <td>    <button
+            [class]="utilisateur.active === 0 ?  'green-btn' : 'red-btn' "
+            (click)="utilisateur.active === 0 ? activateUser(utilisateur.id) : deactivateUser(utilisateur.id)"
+          >
+            {{ utilisateur.active === 0 ? 'Activer' : 'Désactiver' }}
+          </button> </td>
+
+          <td>          <button (click)="openResetUserModal(utilisateur)">Reset</button>
+
         </tr>
       </tbody>
     </table>

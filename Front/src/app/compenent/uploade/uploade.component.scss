@@ -1,8 +1,9 @@
 // formulaire-etudiant.component.scss
 
 form {
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 600px;
+    margin-left: 350px;
+    margin-top: 130px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -23,18 +24,24 @@ form {
       box-sizing: border-box;
     }
   
-    button[type="submit"] {
-      background-color: #007bff;
+    button {
+      display: block;
       color: #fff;
-      padding: 10px 20px;
+      text-align: center;
+      padding: 14px 16px;
+      border-radius: 10px;
+      outline: none;
       border: none;
-      border-radius: 5px;
+      margin: 1px;
+      text-decoration: none;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      background: #a2aaae;
     }
+    
   
     button[type="submit"]:hover {
-      background-color: #0056b3;
+      background-color: #747779;
     }
   }
+  
   

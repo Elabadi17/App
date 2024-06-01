@@ -1,44 +1,50 @@
-.registration-form {
-  max-width: 400px;
-  margin: 0 auto; // Centrer le formulaire horizontalement
+form {
+  max-width: 600px;
+  margin-top: 100px;
+  margin-left: 350px;}
+.login-container {
+  margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-top: 40px;
+}
 
-  h2 {
-    margin-bottom: 20px;
-  }
+h3 {
+  margin-bottom: 20px;
+}
 
-  div {
-    margin-bottom: 20px;
+.form-group {
+  margin-bottom: 20px;
+}
 
-    label {
-      display: block;
-      font-weight: bold;
-    }
+label {
+  display: block;
+  font-weight: bold;
+}
 
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-  }
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
 
-  button {
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+button {
+  display: block;
+  color: #fff;
+  text-align: center;
+  padding: 14px 16px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  margin: 1px;
+  text-decoration: none;
+  cursor: pointer;
+  background: #a2aaae;
+}
 
-    &:hover {
-      background-color: #424242;
-    }
-  }
+button:hover {
+  background-color: #96b6c5;
 }

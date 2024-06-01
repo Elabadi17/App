@@ -1,11 +1,28 @@
-<aside class="sidebar" *ngIf="isLoggedIn()">
-    <ul>
-       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard">Dashboard</a></li>
-       <li *ngIf="isAdmin()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/registration">Registration</a></li>
-       <li *ngIf="isUser()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/gestionnaire">Liste des profs</a></li>
-       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/upload">Formulaire Diplome</a></li>
-       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/etudiants"> Diplome</a></li>
+<nav  *ngIf="isLoggedIn()">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-logo">
+  <a class="logo" routerLink="/"><img src="../assets/img/icon1.png" alt="Logo"></a>
+</div>
+<div class="collapse navbar-collapse" id="navbarNav">
 
-       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><button (click)="logout()">Déconnexion</button>       </li>
-    </ul>
-  </aside>
+  <ul class="navbar-nav ml-auto">
+
+<li class="nav-item-1" routerLinkActive="active" class="active" [routerLinkActiveOptions]="{exact: true}">
+  <button (click)="logout()"><i class="fas fa-sign-out-alt"></i></button>
+</li>
+
+</ul>
+</div>
+   
+</nav>
+ 
+ <aside class="sidebar" *ngIf="isLoggedIn()">
+   <ul>
+     <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard">Dashboard</a></li>
+     <li *ngIf="isAdmin()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/registration">Registration</a></li>
+     <li *ngIf="isAdmin()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/gestionnaire">Liste des profs</a></li>
+     <li *ngIf="isUser()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/upload">Formulaire Diplome</a></li>
+     <li *ngIf="isUser()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/etudiants"> Diplome</a></li>
+   </ul>
+ </aside>
+ 

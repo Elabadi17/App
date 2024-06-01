@@ -1,15 +1,49 @@
 <app-sidebar></app-sidebar>
-<div class="etudiant-info-container">
-    <h2>Informations de l'étudiant</h2>
-    <ul>
-      <li><strong>Nom :</strong> {{ data.nom }}</li>
-      <li><strong>Prénom :</strong> {{ data.prenom }}</li>
-      <li><strong>Filière :</strong> {{ data.filiere }}</li>
-      <li><strong>Promo :</strong> {{ data.promo }}</li>
-      <li><strong>Email :</strong> {{ data.email }}</li>
-      <li><strong>Institut :</strong> {{ data.institut }}</li>
-      <li><strong>Hash du diplôme :</strong> {{ data.diplomeHash }}</li>
-    </ul>
-    <img src="https://cloudflare-ipfs.com/ipfs/{{ data.diplomeHash }}" alt="pas image">
+
+<div>
+  <h1>Diploma Details</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Name</strong></td>
+        <td>{{ data.nom }} {{ data.prenom }}</td>
+      </tr>
+      <tr>
+        <td><strong>Field of Study</strong></td>
+        <td>{{ data.fillier }}</td>
+      </tr>
+      <tr>
+        <td><strong>Promotion</strong></td>
+        <td>{{ data.promo }}</td>
+      </tr>
+      <tr>
+        <td><strong>Email</strong></td>
+        <td>{{ data.email }}</td>
+      </tr>
+      <tr>
+        <td><strong>Institute</strong></td>
+        <td>{{ data.institut }}</td>
+      </tr>
+      <tr>
+        <td><strong>IPFS Hash</strong></td>
+        <td>{{ data.ipfsHash }}</td>
+      </tr>
+      <tr>
+        <td><strong>Owner Address</strong></td>
+        <td>{{ data.owner }}</td>
+      </tr>
+      <tr>
+        <td><strong>Diploma ID</strong></td>
+        <td>{{ data.DiplomaId }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="sendEmail()">Notify User</button>
+
 </div>
-  

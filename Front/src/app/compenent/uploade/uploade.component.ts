@@ -6,7 +6,13 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { IpfsService } from '../../services/Storage/IpfsService';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { BlockchainService } from '../../services/BlockchainService';
+import { DiplomaService } from '../../services/DiplomaService';
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar
+import { toString as uint8ArrayToString } from 'uint8arrays/to-string';
+import { CID } from 'multiformats/cid';
+import { base58btc } from 'multiformats/bases/base58';
+import { Buffer } from 'buffer'; // Import Buffer from buffer
 
 @Component({
   selector: 'app-uploade',
@@ -17,6 +23,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class FormulaireEtudiantComponent {
   etudiant = {
+    address: '',
     nom: '',
     prenom: '',
     filiere: '',
@@ -26,7 +33,11 @@ export class FormulaireEtudiantComponent {
     diplome: null // This will store the selected file
   };
 
-  constructor(private ipfsService: IpfsService,private formBuilder: FormBuilder,private http: HttpClient) {}
+  constructor(private ipfsService: IpfsService,
+    private snackBar: MatSnackBar, // Inject MatSnackBar
+    private formBuilder: FormBuilder,private http: HttpClient,       private diplomaService: DiplomaService,
+
+  ) {}
 
   onFileSelected(event: any) {
     this.etudiant.diplome = event.target.files[0];
@@ -58,9 +69,9 @@ export class FormulaireEtudiantComponent {
       const file = new File([blob], metadataFileName, { type: 'text/plain' });
 
       // Upload metadata file to IPFS
-      const ipfsMetadataHash = await this.ipfsService.uploadToIpfs(file);
-      console.log('Metadata file uploaded to IPFS. Hash:', ipfsMetadataHash);
-      const formData = {
+      //const ipfsMetadataHash = await this.ipfsService.uploadToIpfs(file);
+      //console.log('Metadata file uploaded to IPFS. Hash:', ipfsMetadataHash);
+      /*const formData = {
         nom: this.etudiant.nom,
         metadataHash: ipfsMetadataHash
     };
@@ -70,18 +81,55 @@ export class FormulaireEtudiantComponent {
       })
     };
     console.log(formData);
-    this.http.post('http://localhost:8080/enregistrer-metadata', formData,httpOptions).subscribe(
-        () => {
-            console.log('Données enregistrées avec succès');
-        },
-        (error) => {
-            console.error('Erreur lors de l\'enregistrement des données:', error);
+    console.log(this.etudiant.address,
+      this.etudiant.nom,
+      this.etudiant.prenom,
+      this.etudiant.nom,
+      this.etudiant.prenom,
+      this.etudiant.filiere,
+      this.etudiant.promo,
+      this.etudiant.email,
+      this.etudiant.institut,
+      ipfsMetadataHash)
+       // Convert IPFS hash to bytes32 format
+       const cid = CID.parse(ipfsMetadataHash);
+       const ipfsHashBytes32 = '0x' + Buffer.from(cid.multihash.bytes).toString('hex').slice(4, 68);
+ */
+        // Upload metadata hash to blockchain
+        try {
+          const blockchainResponse = await this.diplomaService.addDiploma(
+            this.etudiant.address,
+            this.etudiant.nom,
+            this.etudiant.prenom,
+            this.etudiant.filiere,
+            this.etudiant.promo,
+            this.etudiant.email,
+            this.etudiant.institut,
+            ipfsDiplomeHash
+          );
+          console.log('Metadata hash uploaded to blockchain:', blockchainResponse);
+          this.snackBar.open('User updated successfully', 'Close', {
+            duration: 3000, // Duration in milliseconds
+          });
+          this.etudiant = {
+            address: '',
+            nom: '',
+            prenom: '',
+            filiere: '',
+            promo: '',
+            email: '',
+            institut: '',
+            diplome: null
+          };
+        } catch (error) {
+          console.error('Error uploading metadata to blockchain:', error);
         }
-    );
-      // You can now use ipfsMetadataHash and ipfsDiplomeHash to save this information to your database or for other necessary actions
-    } catch (error) {
-      console.error('Error uploading files to IPFS:', error);
-      // Display an error message to the user
-    }
+ 
+
+  } catch (error) {
+    console.error('Error uploading files to IPFS:', error);
   }
+}
+
+
 }

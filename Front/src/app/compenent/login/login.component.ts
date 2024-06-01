@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent  {
   userForm: FormGroup;
 
 
-  constructor(private auth: AuthService,private router: Router,private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private auth: AuthService,    private snackBar: MatSnackBar,    private router: Router,private formBuilder: FormBuilder, private http: HttpClient) {
     this.userForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -43,17 +44,31 @@ export class LoginComponent  {
       this.http.post<any>('http://localhost:8080/auth/generateToken', this.userForm.value,httpOptions).subscribe(
         response => {
           console.log('User authenticated successfully:', response);
-          // Stocker le token JWT dans le localStorage
+
+
           this.auth.saveToken(response.token);
-          // Rediriger vers la page du dashboard
-          this.router.navigate(['/dashboard']);
-        },
-        error => {
-          console.error('Error authenticating user:', error);
-          // Gérer l'erreur ici
+         if(this.auth.isUser()){
+          this.auth.isUserActive().subscribe(isActive => {
+            if (!isActive) {
+              localStorage.removeItem('token');
+              this.snackBar.open('Your account is inactive', 'Close', {
+                duration: 3000,
+              });
+            } else {
+              // Redirect to the dashboard
+              this.router.navigate(['/dashboard']);
+            }
+          }, error => {
+            console.error('Error checking user activity', error);
+          });
+         } else {              this.router.navigate(['/dashboard']);
         }
-      );
-
-
-}
+        
+      },
+      error => {
+        console.error('Error authenticating user:', error);
+        // Handle error here
+      }
+    );
+  }
   }}

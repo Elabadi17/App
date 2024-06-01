@@ -19,7 +19,7 @@ export class AppComponent {
 
   isNav(): boolean {
     const URL: string = this.router.url;
-    const navRoutes: string[] = ['/', '/login'];
+    const navRoutes: string[] = ['/', '/login','/verify'];
     return navRoutes.includes(URL);
   }
 }

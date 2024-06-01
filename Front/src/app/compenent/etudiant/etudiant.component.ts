@@ -1,42 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { RegistrationComponent } from '../registration/registration.component';
-import { HttpClient } from '@angular/common/http';
+import { DiplomaService } from '../../services/DiplomaService'; // Ensure the correct path
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-etudiant',
   standalone: true,
-  imports: [SidebarComponent,RegistrationComponent,CommonModule,],
+  imports: [SidebarComponent, RegistrationComponent, CommonModule],
   templateUrl: './etudiant.component.html',
-  styleUrl: './etudiant.component.scss'
+  styleUrls: ['./etudiant.component.scss']
 })
-export class EtudiantComponent {
+export class EtudiantComponent implements OnInit {
+  students: { address: string; name: string }[] = [];
 
-  etudiants: any[] = [];
-
-  constructor(private http: HttpClient,private router: Router) { } // Inject HttpClient
+  constructor(private diplomaService: DiplomaService, private router: Router) { }
 
   ngOnInit(): void {
-    this.fetchUtilisateurs(); // Call fetchUtilisateurs() when component initializes
+    this.fetchStudentData();
   }
 
-  fetchUtilisateurs() {
-    this.http.get<any[]>('http://localhost:8080/etudiants')
-      .subscribe(
-        (data) => {
-          this.etudiants = data; // Assign fetched data to tableauUtilisateurs
-          console.log(data);
-        },
-        (error) => {
-          console.error('Error fetching utilisateurs:', error);
-        }
-      );
+  fetchStudentData(): void {
+    this.diplomaService.getAllDiplomaIdsWithStudentName().then((data: { addresses: string[], names: string[] }) => {
+      this.students = data.addresses.map((address, index) => ({
+        address,
+        name: data.names[index]
+      }));
+    }).catch((error: any) => {
+      console.error('Error fetching student data:', error);
+    });
   }
-
-  voirDetailsEtudiant(metadataHash: string) {
-    this.router.navigate(['/dashboard/etudiant-info', metadataHash]);
+  navigateToDetails(address: string): void {
+    this.router.navigate(['dashboard/etudiant-info', address]);
   }
- 
 }

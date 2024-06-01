@@ -1,28 +1,85 @@
-
 <app-sidebar></app-sidebar>
 
-<form (ngSubmit)="submitForm()">
-    <label for="nom">Nom:</label>
-    <input type="text" id="nom" name="nom" [(ngModel)]="etudiant.nom" required>
-  
-    <label for="prenom">Prénom:</label>
-    <input type="text" id="prenom" name="prenom" [(ngModel)]="etudiant.prenom" required>
-  
-    <label for="filiere">Filière:</label>
-    <input type="text" id="filiere" name="filiere" [(ngModel)]="etudiant.filiere" required>
-  
-    <label for="promo">Promo:</label>
-    <input type="text" id="promo" name="promo" [(ngModel)]="etudiant.promo" required>
-  
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" [(ngModel)]="etudiant.email" required>
-  
-    <label for="institut">Institut:</label>
-    <input type="text" id="institut" name="institut" [(ngModel)]="etudiant.institut" required>
-  
-    <label for="diplome">Image de diplôme:</label>
-    <input type="file" id="diplome" name="diplome" (change)="onFileSelected($event)" accept="image/*" required>
-  
-    <button type="submit">Soumettre</button>
-  </form>
-  
+<div class="col-12 grid-margin">
+      <form class="form-sample" (ngSubmit)="submitForm()">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="nom" class="col-sm-3 col-form-label">Nom</label>
+              <div class="col-sm-9">
+                <input type="text" id="nom" name="nom" class="form-control" [(ngModel)]="etudiant.nom" required />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="prenom" class="col-sm-3 col-form-label">Prénom</label>
+              <div class="col-sm-9">
+                <input type="text" id="prenom" name="prenom" class="form-control" [(ngModel)]="etudiant.prenom" required />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="filiere" class="col-sm-3 col-form-label">Filière</label>
+              <div class="col-sm-9">
+                <input type="text" id="filiere" name="filiere" class="form-control" [(ngModel)]="etudiant.filiere" required />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="promo" class="col-sm-3 col-form-label">Promo</label>
+              <div class="col-sm-9">
+                <input type="text" id="promo" name="promo" class="form-control" [(ngModel)]="etudiant.promo" required />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="email" class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9">
+                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="etudiant.email" required />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="institut" class="col-sm-3 col-form-label">Institut</label>
+              <div class="col-sm-9">
+                <input type="text" id="institut" name="institut" class="form-control" [(ngModel)]="etudiant.institut" required />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="address" class="col-sm-3 col-form-label">Address</label>
+              <div class="col-sm-9">
+                <input type="text" id="address" name="address" class="form-control" [(ngModel)]="etudiant.address" required />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="diplome" class="col-sm-3 col-form-label">Image de diplôme</label>
+              <div class="col-sm-9">
+                <input type="file" id="diplome" name="diplome" class="form-control" (change)="onFileSelected($event)" accept="image/*" required />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+          </div>
+        </div>
+      </form>
+    </div>

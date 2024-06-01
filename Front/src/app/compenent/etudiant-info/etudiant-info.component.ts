@@ -1,62 +1,82 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { RegistrationComponent } from '../registration/registration.component';
-import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
-
+import { DiplomaService } from '../../services/DiplomaService'; // Ensure the correct path
+import { ActivatedRoute } from '@angular/router';
+import {EmailService} from '../../services/email.service' 
 interface EtudiantDetails {
   nom: string;
   prenom: string;
-  filiere: string;
+  fillier: string;
   promo: string;
   email: string;
   institut: string;
-  diplomeHash: string;
+  ipfsHash: string;
+  owner: string;
+  DiplomaId: string;
 }
 
 @Component({
   selector: 'app-etudiant-info',
   standalone: true,
-  imports: [SidebarComponent,RegistrationComponent,CommonModule,],
+  imports: [SidebarComponent, RegistrationComponent, CommonModule],
   templateUrl: './etudiant-info.component.html',
-  styleUrl: './etudiant-info.component.scss'
+  styleUrls: ['./etudiant-info.component.scss']
 })
-export class EtudiantInfoComponent {
-  data: EtudiantDetails = { // Initialisez data avec un objet vide ou des valeurs par défaut
+export class EtudiantInfoComponent implements OnInit {
+  data: EtudiantDetails = {
     nom: '',
     prenom: '',
-    filiere: '',
+    fillier: '',
     promo: '',
     email: '',
     institut: '',
-    diplomeHash: ''
+    ipfsHash: '',
+    owner: '',
+    DiplomaId: ''
   };
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private diplomaService: DiplomaService,
+    private route: ActivatedRoute,
+    private emailService: EmailService
+  ) { }
 
   ngOnInit(): void {
-    // Récupérer le metadataHash de l'URL
-    const metadataHash = this.route.snapshot.paramMap.get('metadataHash');
-    if (metadataHash) {
-      // Appeler fetchData() avec le metadataHash récupéré
-      this.fetchData(metadataHash);
+    const diplomaId = this.route.snapshot.paramMap.get('id');
+    if (diplomaId) {
+      this.fetchStudentData(diplomaId);
     }
   }
 
-  fetchData(metadataHash: string) {
-    // Utiliser les backticks (`) pour créer une chaîne de caractères de modèle
-    const url = `https://cloudflare-ipfs.com/ipfs/${metadataHash}`;
-
-    this.http.get<EtudiantDetails>(url)
-      .subscribe(
-        (data) => {
-          this.data = data; // Assigner les données récupérées
-          console.log(data);
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-        }
-      );
+  fetchStudentData(diplomaId: string): void {
+    this.diplomaService.getDiploma(diplomaId).then((data: EtudiantDetails) => {
+      this.data = data;
+    }).catch((error: any) => {
+      console.error('Error fetching student data:', error);
+    });
+  }
+  sendEmail() {
+    const subject = 'Your Diploma has been uploaded on EduCertify';
+    const body = `Dear ${this.data.nom} ${this.data.prenom},
+                  <br><br>
+                  We are pleased to inform you that your diploma has been successfully uploaded on the EduCertify platform.
+                  <br><br>
+                  Diploma ID: ${this.data.DiplomaId}
+                  <br><br>
+                  Best regards,
+                  <br>
+                  EduCertify Team`;
+    
+    this.emailService.sendEmail(this.data.email, subject, body)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Mail sent successfully');
+      })
+      .catch((error) => {
+        console.error('FAILED...', error);
+        alert('Failed to send mail: ' + error);
+      });
   }
 }

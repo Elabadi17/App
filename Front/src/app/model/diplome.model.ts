@@ -1,10 +1,11 @@
-export interface Diplome {
-    nom: string;
-    prenom: string;
-    filiere: string;
-    promo: string;
-    email: string;
-    institut: string;
-    diplomeHash: string;
-  }
-  
+interface EtudiantDetails {
+  nom: string;
+  prenom: string;
+  fillier: string;
+  promo: string;
+  email: string;
+  institut: string;
+  ipfsHash: string;
+  owner: string;
+  DiplomaId: string;
+}

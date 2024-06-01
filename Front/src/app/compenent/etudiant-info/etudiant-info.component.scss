@@ -1,34 +1,76 @@
-// Style pour le composant parent
-.etudiant-info-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* gestionnaire.component.scss */
+
+/* Style for the table */
+// Table styles
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  max-width: 600px;
+  margin: 0 auto; // Center horizontally
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 40px;
+}
+table {
+
+
+  margin: 0 auto;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+// Button styles
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+// Button variants with modifiers
+.add-row {
+  @extend button; // Reuse base button styles
+  margin-right: 10px;
+}
+
+.save {
+  @extend button; // Reuse base button styles
+  background-color: #28a745;
+
+  &:hover {
+    background-color: #218838;
   }
-  
-  // Style pour le titre
-  .etudiant-info-container h2 {
-    margin-bottom: 20px;
-  }
-  
-  // Style pour la liste des informations de l'étudiant
-  .etudiant-info-container ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  // Style pour chaque élément de la liste
-  .etudiant-info-container li {
-    margin-bottom: 10px;
-  }
-  
-  // Style pour les étiquettes en gras
-  .etudiant-info-container li strong {
-    font-weight: bold;
-    margin-right: 5px;
-  }
-  
-  .etudiant-info-container img {
-    width: 300px; // Pour que l'image respecte la largeur du conteneur
-    height: 500px; // Pour maintenir le ratio de l'image
-    margin-top: 20px; // Pour ajouter un espace au-dessus de l'image
-  }
+}
+.red-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.green-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}

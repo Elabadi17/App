@@ -34,9 +34,39 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("/Users")
+    @GetMapping("/users")
     public List<UserInfo> getAllUsers() {
         return service.getAllUsers();
+    }
+    @GetMapping("/isUserActive")
+    public ResponseEntity<Boolean> isUserActive(Authentication authentication) {
+        String username = authentication.getName();
+        int userId = service.getUserIdByUsername(username);
+        boolean isActive = service.isUserActive(userId);
+        return new ResponseEntity<>(isActive, HttpStatus.OK);
+    }
+    @PostMapping("/users/{id}/update")
+    public ResponseEntity<String> updateUser(@PathVariable int id, @RequestBody UserInfo updatedUserInfo) {
+        service.updateNameAndAddress(id, updatedUserInfo.getName(), updatedUserInfo.getAddress());
+        return new ResponseEntity<>("{\"message\": \"User information updated successfully\"}", HttpStatus.OK);
+    }
+
+    @PostMapping("/users/{id}/changePassword")
+    public ResponseEntity<String> changePassword(@PathVariable int id, @RequestBody UserInfo userInfo) {
+        service.updatePassword(id, userInfo.getPassword());
+        return new ResponseEntity<>("{\"message\": \"Password reset request sent successfully\"}", HttpStatus.OK);
+    }
+
+    @PostMapping("/users/{id}/deactivate")
+    public ResponseEntity<String> deactivateUser(@PathVariable int id) {
+        service.updateActive(id, 0);
+        return new ResponseEntity<>("{\"message\": \"User deactivated successfully\"}", HttpStatus.OK);
+    }
+
+    @PostMapping("/users/{id}/activate")
+    public ResponseEntity<String> activateUser(@PathVariable int id) {
+        service.updateActive(id, 1);
+        return new ResponseEntity<>("{\"message\": \"User activated successfully\"}", HttpStatus.OK);
     }
 
     @PostMapping("/addNewUser")
@@ -68,7 +98,7 @@ public class UserController {
             String roles = userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.joining(","));
-            String token = jwtService.generateToken(authRequest.getUsername(), roles);
+            String token = jwtService.generateToken(authRequest.getUsername(), roles,service.getUserIdByUsername(authRequest.getUsername()));
             return ResponseEntity.ok(new AuthResponse(token));
         } else {
             throw new UsernameNotFoundException("Invalid user request!");

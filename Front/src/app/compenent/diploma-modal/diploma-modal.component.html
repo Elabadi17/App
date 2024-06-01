@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Diploma Details</h1>
+<div mat-dialog-content>
+  <p><strong>Name:</strong> {{ data.nom }}</p>
+  <p><strong>First Name:</strong> {{ data.prenom }}</p>
+  <p><strong>Email:</strong> {{ data.email }}</p>
+  <p><strong>Promotion:</strong> {{ data.promo }}</p>
+  <p><strong>Institute:</strong> {{ data.institut }}</p>
+  <img [src]="imageUrl" alt="Diploma Image" class="img-fluid">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onDownloadClick()">Download Image</button>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

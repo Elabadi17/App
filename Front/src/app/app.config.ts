@@ -12,21 +12,25 @@ import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/
 import { EtudiantComponent } from './compenent/etudiant/etudiant.component';
 import { EtudiantInfoComponent } from './compenent/etudiant-info/etudiant-info.component';
 import { RoleGuard } from './services/auth/role.guard';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { VerifyComponent } from './compenent/verify/verify.component';
 // Define routes for Home, About, and Contact components
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'dashboard/registration', component: RegistrationComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_ADMIN'] } },
-  { path: 'dashboard/gestionnaire', component: GestionnaireComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_USER'] } },
-  { path: 'dashboard/upload', component: FormulaireEtudiantComponent, canActivate: [AuthGuard] },
-  { path: 'dashboard/etudiants', component: EtudiantComponent },
-  { path: 'dashboard/etudiant-info/:metadataHash', component: EtudiantInfoComponent },
+  { path: 'dashboard/gestionnaire', component: GestionnaireComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_ADMIN'] } },
+  { path: 'dashboard/upload', component: FormulaireEtudiantComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_USER'] } },
+  { path: 'dashboard/etudiants', component: EtudiantComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_USER'] } },
+  { path: 'dashboard/etudiant-info/:id', component: EtudiantInfoComponent , canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_USER'] } },
   { path: 'login', component: LoginComponent },
+  { path: 'verify', component: VerifyComponent },
+
 
 ];
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),HttpClientModule, provideHttpClient(withFetch())
+    provideRouter(routes),HttpClientModule, provideHttpClient(withFetch()), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync('noop')
   ]
 };

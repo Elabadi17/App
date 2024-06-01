@@ -1,41 +1,88 @@
 /* gestionnaire.component.scss */
 
 /* Style for the table */
-.table-container {
+// Table styles
 
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Center vertically */
-    height: 100%; /* Ensure the container takes up the full height */
-    max-width: 400px;
-    margin: 0 auto; // Centrer le formulaire horizontalement
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 40px;
+div{
+  margin-top: 150px;
+}
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  max-width: 600px;
+  margin: 0 auto; // Center horizontally
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 40px;
+}
+table {
+
+
+  margin: 0 auto;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+// Button styles
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+// Button variants with modifiers
+.add-row {
+  @extend button; // Reuse base button styles
+  margin-right: 10px;
+}
+
+.save {
+  @extend button; // Reuse base button styles
+  background-color: #28a745;
+
+  &:hover {
+    background-color: #218838;
   }
-  
-  /* Style for table headers */
-  .table-container th {
-    background-color: #f2f2f2;
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+}
+.red-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.green-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.table-container {
+  margin: 0 auto; // Center the table container
+  width: 80%; // Adjust the width as needed, you can change 80% to any other value
+
+  @media (max-width: 768px) {
+    width: 100%; // Ensure full width on smaller screens
   }
-  
-  /* Style for table cells */
-  .table-container td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  /* Style for even rows */
-  .table-container tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Hover effect for rows */
-  .table-container tr:hover {
-    background-color: #ddd;
-  }
-  
+}
