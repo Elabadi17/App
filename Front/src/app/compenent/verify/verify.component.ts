@@ -66,7 +66,7 @@ export class VerifyComponent {
 
   openDialog(diplomaData: any): void {
     const dialogRef = this.dialog.open(DiplomaModalComponent, {
-      width: '250px',
+      width: '450px',
       data: diplomaData
     });
 

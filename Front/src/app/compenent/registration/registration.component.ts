@@ -57,7 +57,7 @@ export class RegistrationComponent implements OnInit {
           console.log('im here');
           console.log(userAddress);
           await this.diplomaService.addUser(userAddress);
-          this.snackBar.open('User updated successfully', 'Close', {
+          this.snackBar.open('User added to blockchain', 'Close', {
             duration: 3000, // Duration in milliseconds
           });
 

@@ -10,71 +10,116 @@ export class BlockchainService {
   private web3: Web3;
   private provider: ethers.providers.Web3Provider;
   private contract: Contract;
-  private contractAddress = '0x938F07f410BA7a83E585bcA1c2ce9b6928658D9e'; // Replace with your contract address
+  private contractAddress ='0xD1f0d17D48565B948843A75Ee077bf6FEACdF65a'; // Replace with your contract address
   private contractABI: ContractInterface = [
     {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
       "inputs": [
         {
+          "indexed": true,
+          "internalType": "address",
+          "name": "admin",
+          "type": "address"
+        }
+      ],
+      "name": "AdminAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "admin",
+          "type": "address"
+        }
+      ],
+      "name": "AdminRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "diplomaId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
           "internalType": "string",
-          "name": "_diplomeHash",
+          "name": "nom",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "prenom",
           "type": "string"
         }
       ],
-      "name": "getDiplomaByHash",
-      "outputs": [
+      "name": "DiplomaAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
         {
-          "components": [
-            {
-              "internalType": "string",
-              "name": "nom",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "prenom",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "filiere",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "promo",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "email",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "institut",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "diplomeHash",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "metadataHash",
-              "type": "string"
-            }
-          ],
-          "internalType": "struct DiplomaRegistry.Diploma",
-          "name": "",
-          "type": "tuple"
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
         }
       ],
-      "stateMutability": "view",
+      "name": "UserAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "UserRemoved",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newAdmin",
+          "type": "address"
+        }
+      ],
+      "name": "addAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        },
         {
           "internalType": "string",
           "name": "_nom",
@@ -87,7 +132,7 @@ export class BlockchainService {
         },
         {
           "internalType": "string",
-          "name": "_filiere",
+          "name": "_fillier",
           "type": "string"
         },
         {
@@ -107,18 +152,260 @@ export class BlockchainService {
         },
         {
           "internalType": "string",
-          "name": "_diplomeHash",
+          "name": "_ipfsHash",
+          "type": "string"
+        }
+      ],
+      "name": "addDiploma",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newUser",
+          "type": "address"
+        }
+      ],
+      "name": "addUser",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "diplomas",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "DiplomaId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "nom",
           "type": "string"
         },
         {
           "internalType": "string",
-          "name": "_metadataHash",
+          "name": "prenom",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "fillier",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "promo",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "institut",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "ipfsHash",
           "type": "string"
         }
       ],
-      "name": "uploadMetadata",
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "diplomasCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAllDiplomaIdsWithStudentName",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_DiplomaId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getDiploma",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "DiplomaId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "nom",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "prenom",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "fillier",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "promo",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "institut",
+              "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "ipfsHash",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct diplome.Diploma",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getNumberOfDiplomas",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "admin",
+          "type": "address"
+        }
+      ],
+      "name": "removeAdmin",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "removeUser",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_DiplomaId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "_nom",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_prenom",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_promo",
+          "type": "string"
+        }
+      ],
+      "name": "verifyDiploma",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     }
   ];

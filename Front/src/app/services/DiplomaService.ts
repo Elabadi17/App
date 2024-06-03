@@ -10,7 +10,7 @@ export class DiplomaService {
   private web3: Web3;
   private provider: ethers.providers.Web3Provider;
   private contract: Contract;
-  private contractAddress = '0x8A5c38C37A22c3BF6d14CfD2Df604a9F096E0126'; // Replace with your contract address
+  private contractAddress = '0xD1f0d17D48565B948843A75Ee077bf6FEACdF65a'; // Replace with your contract address
   private contractABI: ContractInterface = [
     {
       "inputs": [],

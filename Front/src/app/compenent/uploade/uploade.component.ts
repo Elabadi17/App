@@ -108,7 +108,7 @@ export class FormulaireEtudiantComponent {
             ipfsDiplomeHash
           );
           console.log('Metadata hash uploaded to blockchain:', blockchainResponse);
-          this.snackBar.open('User updated successfully', 'Close', {
+          this.snackBar.open('Diploma added successfully', 'Close', {
             duration: 3000, // Duration in milliseconds
           });
           this.etudiant = {

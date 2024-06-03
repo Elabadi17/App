@@ -1,0 +1,75 @@
+// Mixin for responsive typography
+@mixin responsive-font($min-size, $max-size) {
+    font-size: $min-size;
+  
+    @media (min-width: 576px) {
+      font-size: calc(#{$min-size} + (#{$max-size} - #{$min-size}) * ((100vw - 576px) / (1200 - 576)));
+    }
+  
+    @media (min-width: 1200px) {
+      font-size: $max-size;
+    }
+  }
+  
+  :host {
+    display: block;
+    padding: 20px;
+  }
+  
+  h1 {
+    @include responsive-font(24px, 32px);
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  mat-dialog-content {
+    p {
+      margin: 10px 0;
+      font-size: 16px;
+  
+      @media (min-width: 576px) {
+        font-size: 18px;
+      }
+  
+      strong {
+        color: #555;
+      }
+    }
+  
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 0;
+  
+    button.mat-button {
+        display: block;
+        text-align: center;
+        padding: 14px 16px;
+        border-radius: 10px;
+        outline: none;
+        border: none;
+        margin: 1px;
+        text-decoration: none;
+        cursor: pointer;
+        background: #a2aaae;
+        color: #FFFFFF;
+    
+        &:hover {
+          background-color: #96B6C5;
+          color: #FFFFFF;
+          border-radius: 10px;
+        }
+      }
+  }
+  
